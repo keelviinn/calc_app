@@ -3,9 +3,9 @@ import api from './services/api';
 import { Wrapper, FormAndList, FormWrapper, CalcList, CardCald } from './style/global';
 
 export default () => {
-  const [calc, setCalc] = useState([])
-  const [values, setValues] = useState({});
   const [loading, setLoading] = useState(false);
+  const [values, setValues] = useState({});
+  const [data, setData] = useState([])
 
   const handleChange = (event) => {
     const auxValues = { ...values };
@@ -15,8 +15,9 @@ export default () => {
   
   useEffect( async () => {
     const { data } = await api.get('api/calc');
-    setCalc(data);
-  }, [values, calc]);
+    console.log(data);
+    setData(data);
+  }, []);
 
   const handleSubmit = callback => event => {
     event.preventDefault();
@@ -77,10 +78,10 @@ export default () => {
         
         <CalcList>
           <h2>Lista de Calculos</h2>
-          {calc.length === undefined ?
+          {data.length === undefined ?
             <p>Sem resoluções de calculos </p> :
             <div>
-              {calc.map((item) => {
+              {data.map((item) => {
                 return (
                   <CardCald>
                     <p>Nome do solicitante: <span>{item.name}</span></p>
