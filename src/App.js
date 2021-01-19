@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from './services/api';
 import { Wrapper, FormAndList, FormWrapper, CalcList, CardCald } from './style/global';
 
-export default () => {
+export default function Calc() {
   const [loading, setLoading] = useState(false);
   const [values, setValues] = useState({});
   const [data, setData] = useState([])
@@ -13,12 +13,13 @@ export default () => {
     setValues(auxValues);
   };
   
+  const response = async () => {
+    const { data } = await api.get('api/calc');
+    console.log(data);
+    setData(data);      
+  }
+  
   useEffect(() => {
-    const response = async () => {
-      const { data } = await api.get('api/calc');
-      console.log(data);
-      setData(data);      
-    }
     response()
   }, []);
 
@@ -86,7 +87,7 @@ export default () => {
             <div>
               {data.map((item) => {
                 return (
-                  <CardCald>
+                  <CardCald key={item.name}>
                     <p>Nome do solicitante: <span>{item.name}</span></p>
                     <p>resolução: <span>{item.numberA}</span> x <span>{item.numberB}</span> = <span>{item.calculator}</span></p>
                   </CardCald>
