@@ -13,10 +13,13 @@ export default () => {
     setValues(auxValues);
   };
   
-  useEffect( async () => {
-    const { data } = await api.get('api/calc');
-    console.log(data);
-    setData(data);
+  useEffect(() => {
+    const response = async () => {
+      const { data } = await api.get('api/calc');
+      console.log(data);
+      setData(data);      
+    }
+    response()
   }, []);
 
   const handleSubmit = callback => event => {
