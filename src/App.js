@@ -12,6 +12,11 @@ export default () => {
     auxValues[event.target.name] = event.target.value;
     setValues(auxValues);
   };
+  
+  useEffect( async () => {
+    const { data } = await api.get('api/calc');
+    setCalc(data);
+  }, [values, calc]);
 
   const handleSubmit = callback => event => {
     event.preventDefault();
@@ -31,11 +36,6 @@ export default () => {
       { 'Content-Type': 'application/json' }
     )
   };
-
-  useEffect( async () => {
-    const { data } = await api.get('api/calc');
-    setCalc(data);
-  }, [calc]);
 
   return (
     <Wrapper>
